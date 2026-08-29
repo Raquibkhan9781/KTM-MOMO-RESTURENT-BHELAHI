@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KTM RESTAURANT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div>
+    <p class="small-title">WELCOME TO</p>
+    <h1>KTM RESTAURANT</h1>
+    <p class="tagline">GOOD FOOD • GOOD MOOD • GREAT MOMENTS</p>
+  </div>
+</header>
+
+<main class="container">
+  <section>
+    <div class="section-heading">
+      <span>OUR MENU</span>
+      <h2>Choose Your Favourite</h2>
+    </div>
+    <div id="menuGrid" class="menu-grid"></div>
+  </section>
+
+  <section class="order-section">
+    <div class="order-header">
+      <div>
+        <span>YOUR ORDER</span>
+        <h2>ORDER SUMMARY</h2>
+      </div>
+      <div id="cartCount" class="cart-count">0 ITEMS</div>
+    </div>
+
+    <div id="emptyOrder" class="empty-order">
+      <div>🛒</div>
+      <p>Your order is empty</p>
+      <small>Add some delicious items from the menu.</small>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="orderTable">
+        <thead>
+          <tr><th>ITEM</th><th>QTY</th><th>PRICE</th><th>AMOUNT</th><th></th></tr>
+        </thead>
+        <tbody id="orderBody"></tbody>
+      </table>
+    </div>
+
+    <div class="total-box">
+      <span>TOTAL AMOUNT</span>
+      <strong id="totalAmount">₹0</strong>
+    </div>
+
+    <button class="place-order" onclick="placeOrder()">PLACE ORDER</button>
+    <button class="clear-order" onclick="clearOrder()">CLEAR ORDER</button>
+  </section>
+</main>
+
+<footer>© 2026 KTM RESTAURANT • THANK YOU FOR VISITING</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
