@@ -1,0 +1,50 @@
+const MENU={Pasta:30,Pizza:40,Burger:50,Sandwich:60,Fries:70,Coke:40,Coffee:50,Tea:20};
+const ICON={Pasta:"🍝",Pizza:"🍕",Burger:"🍔",Sandwich:"🥪",Fries:"🍟",Coke:"🥤",Coffee:"☕",Tea:"🍵"};
+let orders=[];
+
+function buildMenu(){
+  const grid=document.getElementById("menuGrid");
+  grid.innerHTML=Object.entries(MENU).map(([name,price])=>`
+    <div class="menu-card">
+      <div class="food-icon">${ICON[name]}</div>
+      <h3>${name}</h3>
+      <p class="price">₹${price}</p>
+      <button class="add-btn" onclick="addItem('${name}')">ADD TO ORDER</button>
+    </div>`).join("");
+}
+function addItem(name){
+  let item=orders.find(x=>x.name===name);
+  if(item)item.quantity++; else orders.push({name,price:MENU[name],quantity:1});
+  renderOrder();
+}
+function changeQuantity(name,change){
+  const item=orders.find(x=>x.name===name); if(!item)return;
+  item.quantity+=change;
+  if(item.quantity<=0)orders=orders.filter(x=>x.name!==name);
+  renderOrder();
+}
+function removeItem(name){orders=orders.filter(x=>x.name!==name);renderOrder()}
+function renderOrder(){
+  const body=document.getElementById("orderBody"), table=document.getElementById("orderTable"), empty=document.getElementById("emptyOrder");
+  let total=0,count=0; body.innerHTML="";
+  orders.forEach(item=>{
+    const amount=item.price*item.quantity; total+=amount; count+=item.quantity;
+    body.innerHTML+=`<tr>
+      <td><strong>${item.name}</strong></td>
+      <td><div class="qty-controls"><button onclick="changeQuantity('${item.name}',-1)">−</button><strong>${item.quantity}</strong><button onclick="changeQuantity('${item.name}',1)">+</button></div></td>
+      <td>₹${item.price}</td><td><strong>₹${amount}</strong></td>
+      <td><button class="remove-btn" onclick="removeItem('${item.name}')">🗑️</button></td>
+    </tr>`;
+  });
+  document.getElementById("totalAmount").textContent=`₹${total}`;
+  document.getElementById("cartCount").textContent=`${count} ${count===1?"ITEM":"ITEMS"}`;
+  table.style.display=orders.length?"table":"none"; empty.style.display=orders.length?"none":"block";
+}
+function placeOrder(){
+  if(!orders.length){alert("Please add at least one item to your order.");return}
+  const total=orders.reduce((sum,x)=>sum+x.price*x.quantity,0);
+  alert(`ORDER PLACED SUCCESSFULLY!\\n\\nTOTAL AMOUNT: ₹${total}`);
+  clearOrder();
+}
+function clearOrder(){orders=[];renderOrder()}
+buildMenu();renderOrder();
